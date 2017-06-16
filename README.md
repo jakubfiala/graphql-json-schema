@@ -1,4 +1,6 @@
 # graphql-json-schema
+[![](https://travis-ci.org/jakubfiala/graphql-json-schema.svg?branch=master")](https://travis-ci.org/jakubfiala/graphql-json-schema)
+
 Converts GraphQL Schema Language to JSON Schema
 
 ## Installation
@@ -44,7 +46,7 @@ npm install graphql-json-schema
   console.log(schema);
 ```
 
-the code above returns the following JSON:
+the code above returns the following JSON as a plain JS object:
 
 ```json
 {
