@@ -1,5 +1,5 @@
 # graphql-json-schema
-[![](https://travis-ci.org/jakubfiala/graphql-json-schema.svg?branch=master")](https://travis-ci.org/jakubfiala/graphql-json-schema)
+[![](https://travis-ci.org/jakubfiala/graphql-json-schema.svg?branch=master)](https://travis-ci.org/jakubfiala/graphql-json-schema)
 
 Converts GraphQL Schema Language to JSON Schema
 
