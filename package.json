@@ -1,0 +1,27 @@
+{
+  "name": "graphql-json-schema",
+  "version": "0.1.0",
+  "description": "Converts between GraphQL Schema Language and JSON Schema",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakubfiala/graphql-json-schema.git"
+  },
+  "keywords": [
+    "graphql",
+    "json-schema"
+  ],
+  "author": "Jakub Fiala",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jakubfiala/graphql-json-schema/issues"
+  },
+  "homepage": "https://github.com/jakubfiala/graphql-json-schema#readme",
+  "dependencies": {
+    "graphql": "^0.10.1",
+    "jasmine": "^2.6.0"
+  }
+}

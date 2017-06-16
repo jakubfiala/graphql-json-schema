@@ -1,52 +1,3 @@
-# graphql-json-schema
-Converts GraphQL Schema Language to JSON Schema
-
-## Installation
-
-```shell
-npm install graphql-json-schema
-```
-
-## Usage
-
-```js
-  const transform = require('graphql-json-schema');
-
-  const schema = transform(`
-    scalar Foo
-
-    union MyUnion = Foo | String | Float
-
-    enum MyEnum {
-      FIRST_ITEM
-      SECOND_ITEM
-      THIRD_ITEM
-    }
-
-    type Stuff {
-      my_field: Int
-      req_field: String!
-      recursion: MoreStuff
-      custom_scalar: Foo
-      enum: MyEnum
-    }
-
-    type MoreStuff {
-      first: [Float]
-      identifier: [ID]!
-      reference: Stuff!
-      bool: Boolean!
-      union: MyUnion
-      with_params(param1: Int, param2: [Float]): Int
-    }
-  `);
-
-  console.log(schema);
-```
-
-the code above returns the following JSON:
-
-```json
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {
@@ -221,4 +172,3 @@ the code above returns the following JSON:
     }
   }
 }
-```
