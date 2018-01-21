@@ -112,12 +112,18 @@ const toSchemaObject = definition => {
     .filter(f => f.required)
     .map(f => f.title);
 
-  return {
+  let schemaObject = {
     title: definition.name.value,
     type: 'object',
     properties,
-    required
+    required,
+  };
+
+  if (definition.kind === 'InputObjectTypeDefinition') {
+    Object.assign(schemaObject, { input: true });
   }
+
+  return schemaObject;
 }
 
 /**
