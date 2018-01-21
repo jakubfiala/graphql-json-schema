@@ -41,12 +41,17 @@ npm install graphql-json-schema
       union: MyUnion
       with_params(param1: Int, param2: [Float]): Int
     }
+
+    input InputType {
+      an_int: Int!
+      a_string: String
+    }
   `);
 
   console.log(schema);
 ```
 
-the code above returns the following JSON as a plain JS object:
+the code above prints the following JSON as a plain JS object:
 
 ```json
 {
@@ -219,6 +224,26 @@ the code above returns the following JSON as a plain JS object:
       "required": [
         "identifier",
         "bool"
+      ]
+    },
+    "InputType": {
+      "title": "InputType",
+      "type": "object",
+      "input": true,
+      "properties": {
+        "an_int": {
+          "type": "integer",
+          "required": true,
+          "title": "an_int"
+        },
+        "a_string": {
+          "type": "string",
+          "required": false,
+          "title": "a_string"
+        }
+      },
+      "required": [
+        "an_int"
       ]
     }
   }
