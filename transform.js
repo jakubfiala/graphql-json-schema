@@ -42,6 +42,22 @@ const getPropertyType = type => {
 }
 
 /**
+ * converts the GQL arguments array into a plain JSON schema array
+ *
+ * @param      {Array}  _arguments  The GQL arguments
+ * @return     {Object}  a plain JSON array
+ */
+const toFieldArguments = _arguments => {
+  return _arguments.map(a => {
+    return {
+      title: a.name.value,
+      type: getPropertyType(a.type),
+      defaultValue: a.defaultValue
+    };
+  });
+}
+
+/**
  * maps a GQL type field onto a JSON Schema property
  *
  * @param      {object}  field   The GQL field object
@@ -52,16 +68,11 @@ const toSchemaProperty = field => {
 
   if ('$ref' in propertyType) propertyType = { allOf: [propertyType, { title: field.name.value }] };
 
-  return Object.assign(propertyType, {
-    title: field.name.value,
-    arguments: field.arguments.map(a => {
-      return {
-        title: a.name.value,
-        type: getPropertyType(a.type),
-        defaultValue: a.defaultValue
-      };
-    })
-  });
+  return Object.assign(
+    propertyType,
+    { title: field.name.value },
+    field.arguments ? { arguments: toFieldArguments(field.arguments) } : {}
+  );
 }
 
 /**
@@ -101,12 +112,18 @@ const toSchemaObject = definition => {
     .filter(f => f.required)
     .map(f => f.title);
 
-  return {
+  let schemaObject = {
     title: definition.name.value,
     type: 'object',
     properties,
-    required
+    required,
+  };
+
+  if (definition.kind === 'InputObjectTypeDefinition') {
+    Object.assign(schemaObject, { input: true });
   }
+
+  return schemaObject;
 }
 
 /**

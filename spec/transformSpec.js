@@ -19,6 +19,6 @@ describe('GraphQL to JSON Schema transform', () => {
   });
 
   it('parses a test GraphQL Schema properly', () => {
-    expect(mockJSONSchema).toEqual(transform(mockGraphQL));
+    expect(transform(mockGraphQL)).toEqual(mockJSONSchema);
   });
 })

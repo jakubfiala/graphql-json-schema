@@ -169,6 +169,26 @@
         "identifier",
         "bool"
       ]
+    },
+    "InputType": {
+      "title": "InputType",
+      "type": "object",
+      "input": true,
+      "properties": {
+        "an_int": {
+          "type": "integer",
+          "required": true,
+          "title": "an_int"
+        },
+        "a_string": {
+          "type": "string",
+          "required": false,
+          "title": "a_string"
+        }
+      },
+      "required": [
+        "an_int"
+      ]
     }
   }
 }
