@@ -24,3 +24,8 @@ type MoreStuff {
   union: MyUnion
   with_params(param1: Int, param2: [Float]): Int
 }
+
+input InputType {
+  an_int: Int!
+  a_string: String
+}
