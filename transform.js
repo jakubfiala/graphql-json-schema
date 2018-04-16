@@ -133,7 +133,10 @@ const toSchemaObject = definition => {
  * @return     {object}  A plain JavaScript object which conforms to JSON Schema
  */
 const transform = document => {
-  const definitions = document.definitions.map(toSchemaObject);
+  // ignore directives
+  const definitions = document.definitions.
+    filter(d => d.kind !== 'DirectiveDefinition').
+    map(toSchemaObject);
 
   const schema = {
     $schema: 'http://json-schema.org/draft-04/schema#',
