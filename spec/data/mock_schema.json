@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Foo": {
       "title": "Foo",
@@ -13,12 +13,10 @@
           "$ref": "#/definitions/Foo"
         },
         {
-          "type": "string",
-          "required": false
+          "type": "string"
         },
         {
-          "type": "number",
-          "required": false
+          "type": "number"
         }
       ]
     },
@@ -37,13 +35,11 @@
       "properties": {
         "my_field": {
           "type": "integer",
-          "required": false,
           "title": "my_field",
           "arguments": []
         },
         "req_field": {
           "type": "string",
-          "required": true,
           "title": "req_field",
           "arguments": []
         },
@@ -89,10 +85,7 @@
         "first": {
           "type": "array",
           "items": {
-            "type": {
-              "type": "number",
-              "required": false
-            }
+            "type": "number"
           },
           "title": "first",
           "arguments": []
@@ -100,20 +93,15 @@
         "identifier": {
           "type": "array",
           "items": {
-            "type": {
-              "type": "string",
-              "required": false
-            }
+            "type": "string"
           },
-          "required": true,
           "title": "identifier",
           "arguments": []
         },
         "reference": {
           "allOf": [
             {
-              "$ref": "#/definitions/Stuff",
-              "required": true
+              "$ref": "#/definitions/Stuff"
             },
             {
               "title": "reference"
@@ -122,7 +110,6 @@
         },
         "bool": {
           "type": "boolean",
-          "required": true,
           "title": "bool",
           "arguments": []
         },
@@ -138,14 +125,12 @@
         },
         "with_params": {
           "type": "integer",
-          "required": false,
           "title": "with_params",
           "arguments": [
             {
               "title": "param1",
               "type": {
-                "type": "integer",
-                "required": false
+                "type": "integer"
               },
               "defaultValue": null
             },
@@ -154,10 +139,7 @@
               "type": {
                 "type": "array",
                 "items": {
-                  "type": {
-                    "type": "number",
-                    "required": false
-                  }
+                  "type": "number"
                 }
               },
               "defaultValue": null
@@ -167,6 +149,7 @@
       },
       "required": [
         "identifier",
+        "reference",
         "bool"
       ]
     },
@@ -177,12 +160,10 @@
       "properties": {
         "an_int": {
           "type": "integer",
-          "required": true,
           "title": "an_int"
         },
         "a_string": {
           "type": "string",
-          "required": false,
           "title": "a_string"
         }
       },

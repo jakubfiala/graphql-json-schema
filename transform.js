@@ -20,19 +20,16 @@ const PRIMITIVES = {
 const getPropertyType = type => {
   switch (type.kind) {
     case 'NonNullType':
-      return Object.assign(getPropertyType(type.type), { required: true });
+      return getPropertyType(type.type);
     case 'ListType':
       return {
         type: 'array',
-        items: {
-          type: getPropertyType(type.type)
-        }
+        items: getPropertyType(type.type)
       }
     default:
       if (type.name.value in PRIMITIVES) {
         return {
-          type: PRIMITIVES[type.name.value],
-          required: false
+          type: PRIMITIVES[type.name.value]
         };
       }
       else {
@@ -75,6 +72,11 @@ const toSchemaProperty = field => {
   );
 }
 
+
+const getRequiredFields = fields => fields
+  .filter(f => f.type ? f.type.kind === 'NonNullType' : f.kind === 'NonNullType')
+  .map(f => f.name.value);
+
 /**
  * Converts a single GQL definition into a plain JS schema object
  *
@@ -103,14 +105,12 @@ const toSchemaObject = definition => {
     };
   }
 
+  const required = getRequiredFields(definition.fields);
+
   const fields = definition.fields.map(toSchemaProperty);
 
   const properties = {};
   for (let f of fields) properties[f.title] = f.allOf ? { allOf: f.allOf } : f;
-
-  const required = fields
-    .filter(f => f.required)
-    .map(f => f.title);
 
   let schemaObject = {
     title: definition.name.value,
@@ -136,7 +136,7 @@ const transform = document => {
   const definitions = document.definitions.map(toSchemaObject);
 
   const schema = {
-    $schema: 'http://json-schema.org/draft-04/schema#',
+    $schema: 'http://json-schema.org/draft-07/schema#',
     definitions: {}
   };
 
