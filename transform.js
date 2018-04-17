@@ -132,8 +132,12 @@ const toSchemaObject = (strictMode = false) => definition => {
  * @param      {Document}  document  The GraphQL document returned by the parse function of graphql/language
  * @return     {object}  A plain JavaScript object which conforms to JSON Schema
  */
+
 const transform = (document, strictMode = false) => {
-  const definitions = document.definitions.map(toSchemaObject(strictMode));
+  // ignore directives
+  const definitions = document.definitions
+    .filter(d => d.kind !== 'DirectiveDefinition')
+    .map(toSchemaObject);
 
   const schema = {
     $schema: 'http://json-schema.org/draft-07/schema#',
