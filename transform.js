@@ -60,7 +60,7 @@ const toFieldArguments = _arguments => {
  * @param      {object}  field   The GQL field object
  * @return     {Object}  a plain JS object containing the property schema or a reference to another definition
  */
-const toSchemaProperty = field => {
+const toSchemaProperty = (strictMode = false) => field => {
   let propertyType = getPropertyType(field.type);
 
   if ('$ref' in propertyType) propertyType = { allOf: [propertyType, { title: field.name.value }] };
@@ -68,7 +68,7 @@ const toSchemaProperty = field => {
   return Object.assign(
     propertyType,
     { title: field.name.value },
-    field.arguments ? { arguments: toFieldArguments(field.arguments) } : {}
+    field.arguments && !strictMode ? { arguments: toFieldArguments(field.arguments) } : {}
   );
 }
 
@@ -83,31 +83,31 @@ const getRequiredFields = fields => fields
  * @param      {Object}  definition  The GQL definition object
  * @return     {Object}  A plain JS schema object
  */
-const toSchemaObject = definition => {
+const toSchemaObject = (strictMode = false) => definition => {
   if (definition.kind === 'ScalarTypeDefinition') {
     return {
       title: definition.name.value,
-      type: 'GRAPHQL_SCALAR'
+      ...(strictMode ? {} : { type: 'GRAPHQL_SCALAR' })
     }
   }
   else if (definition.kind === 'UnionTypeDefinition') {
     return {
       title: definition.name.value,
-      type: 'GRAPHQL_UNION',
+      // type: 'GRAPHQL_UNION', // type is optional here
       oneOf: definition.types.map(getPropertyType)
     }
   }
   else if (definition.kind === 'EnumTypeDefinition') {
     return {
       title: definition.name.value,
-      type: 'GRAPHQL_ENUM',
+      // type: 'GRAPHQL_ENUM', // type is optional here
       enum: definition.values.map(v => v.name.value)
     };
   }
 
   const required = getRequiredFields(definition.fields);
 
-  const fields = definition.fields.map(toSchemaProperty);
+  const fields = definition.fields.map(toSchemaProperty(strictMode));
 
   const properties = {};
   for (let f of fields) properties[f.title] = f.allOf ? { allOf: f.allOf } : f;
@@ -119,7 +119,7 @@ const toSchemaObject = definition => {
     required,
   };
 
-  if (definition.kind === 'InputObjectTypeDefinition') {
+  if (!strictMode && definition.kind === 'InputObjectTypeDefinition') {
     Object.assign(schemaObject, { input: true });
   }
 
@@ -132,8 +132,8 @@ const toSchemaObject = definition => {
  * @param      {Document}  document  The GraphQL document returned by the parse function of graphql/language
  * @return     {object}  A plain JavaScript object which conforms to JSON Schema
  */
-const transform = document => {
-  const definitions = document.definitions.map(toSchemaObject);
+const transform = (document, strictMode = false) => {
+  const definitions = document.definitions.map(toSchemaObject(strictMode));
 
   const schema = {
     $schema: 'http://json-schema.org/draft-07/schema#',

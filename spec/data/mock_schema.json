@@ -7,7 +7,6 @@
     },
     "MyUnion": {
       "title": "MyUnion",
-      "type": "GRAPHQL_UNION",
       "oneOf": [
         {
           "$ref": "#/definitions/Foo"
@@ -22,7 +21,6 @@
     },
     "MyEnum": {
       "title": "MyEnum",
-      "type": "GRAPHQL_ENUM",
       "enum": [
         "FIRST_ITEM",
         "SECOND_ITEM",

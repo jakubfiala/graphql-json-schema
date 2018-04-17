@@ -5,6 +5,7 @@ const Ajv = require('ajv');
 
 const ajv = new Ajv();
 const mockJSONSchema = require(path.join(__dirname, 'data/mock_schema.json'));
+const mockJSONSchemaStrict = require(path.join(__dirname, 'data/mock_schema_strict.json'));
 const mockGraphQL = fs.readFileSync(path.join(__dirname, 'data/mock_schema.graphql'), { encoding: 'utf-8' });
 
 describe('GraphQL to JSON Schema transform', () => {
@@ -40,4 +41,16 @@ describe('GraphQL to JSON Schema transform', () => {
       console.log(ajv.errors)
     }
   });
+
+  describe('with strict mode', () => {
+    it('parses a test GraphQL Schema properly', () => {
+      const schema = transform(mockGraphQL, true);
+      expect(schema).toEqual(mockJSONSchemaStrict);
+      const valid = ajv.validateSchema(schema);
+      expect(valid).toBe(true);
+      if (!valid) {
+        console.log(ajv.errors)
+      }
+    });
+  })
 })
