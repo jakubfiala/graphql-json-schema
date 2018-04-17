@@ -139,7 +139,7 @@ const transform = (document, strictMode = false) => {
   // ignore directives
   const definitions = document.definitions
     .filter(d => d.kind !== 'DirectiveDefinition')
-    .map(toSchemaObject);
+    .map(toSchemaObject(strictMode));
 
   const schema = {
     $schema: 'http://json-schema.org/draft-07/schema#',
