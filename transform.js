@@ -85,10 +85,12 @@ const getRequiredFields = fields => fields
  */
 const toSchemaObject = (strictMode = false) => definition => {
   if (definition.kind === 'ScalarTypeDefinition') {
-    return {
-      title: definition.name.value,
-      ...(strictMode ? {} : { type: 'GRAPHQL_SCALAR' })
-    }
+    return Object.assign(
+      {
+        title: definition.name.value
+      },
+      strictMode ? {} : { type: 'GRAPHQL_SCALAR' }
+    );
   }
   else if (definition.kind === 'UnionTypeDefinition') {
     return {
