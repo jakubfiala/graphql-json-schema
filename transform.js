@@ -134,9 +134,9 @@ const toSchemaObject = definition => {
  */
 const transform = document => {
   // ignore directives
-  const definitions = document.definitions.
-    filter(d => d.kind !== 'DirectiveDefinition').
-    map(toSchemaObject);
+  const definitions = document.definitions
+    .filter(d => d.kind !== 'DirectiveDefinition')
+    .map(toSchemaObject);
 
   const schema = {
     $schema: 'http://json-schema.org/draft-04/schema#',
