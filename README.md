@@ -14,6 +14,9 @@ npm install graphql-json-schema
 ```js
   const transform = require('graphql-json-schema');
 
+  // transform(schemaStr, strictMode=flase)
+  //  - strict mode ensure a valid JSON schema generation
+
   const schema = transform(`
     scalar Foo
 
@@ -55,7 +58,7 @@ the code above prints the following JSON as a plain JS object:
 
 ```json
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Foo": {
       "title": "Foo",
