@@ -132,6 +132,7 @@ const toSchemaObject = (strictMode = false) => definition => {
  * GQL -> JSON Schema transform
  *
  * @param      {Document}  document  The GraphQL document returned by the parse function of graphql/language
+ * @param      {boolean}  strictMode  Should return a valid JSON Schema (default: false)
  * @return     {object}  A plain JavaScript object which conforms to JSON Schema
  */
 
